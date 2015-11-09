@@ -54,6 +54,7 @@ bool ABP_Grid::GetUsed(int32 fID){
 		if (GridArray[i].ID == fID)
 			return GridArray[i].Used;
 	}
+	return 0;
 }
 
 void ABP_Grid::SetUsed(int32 fID, bool used){
