@@ -26,3 +26,10 @@ void AUnitSelect::Tick( float DeltaTime )
 
 }
 
+void AUnitSelect::SelectUnit(int32 fID) {
+	FUnitSelec tempStruct;
+	tempStruct.ID = fID;
+	tempStruct.UAmount = FMath::RandRange(1, Amount);
+
+	UnitArray.Add(tempStruct);
+}
