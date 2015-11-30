@@ -12,7 +12,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -55,6 +54,8 @@ Saved/*
 
 # Compiled source files for the engine to use
 Intermediate/*
+
+Content/StarterContent/*
 
 # Cache files for the editor to use
 DerivedDataCache/*

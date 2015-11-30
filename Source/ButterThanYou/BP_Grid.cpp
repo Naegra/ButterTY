@@ -16,8 +16,7 @@ ABP_Grid::ABP_Grid()
 void ABP_Grid::BeginPlay()
 {
 	Super::BeginPlay();
-	ABP_Grid::CreateLevelGrid(offset, rows, columns);
-	
+	ABP_Grid::CreateLevelGrid(offsetX, offsetY, rows, columns);
 }
 
 // Called every frame
@@ -27,14 +26,14 @@ void ABP_Grid::Tick( float DeltaTime )
 
 }
 
-void ABP_Grid::CreateLevelGrid(int32 offset, int32 rows, int32 columns) {
+void ABP_Grid::CreateLevelGrid(int32 offsetX, int32 offsetY, int32 rows, int32 columns) {
 
 	for (int i = 1; i < rows + 1; ++i){
 		for (int j = 1; j < columns + 1; ++j){
 			FVector tempVector = GetActorLocation();
 			FGrid tempGrid;
 			tempGrid.ID = i * 10 + j;
-			tempGrid.Position = FVector(tempVector.X + offset * j, tempVector.Y + offset * i, tempVector.Z);
+			tempGrid.Position = FVector(tempVector.X + offsetX * j, tempVector.Y + offsetY * i, tempVector.Z);
 			tempGrid.Used = false;
 			GridArray.Add(tempGrid);
 		}
@@ -59,7 +58,9 @@ bool ABP_Grid::GetUsed(int32 fID){
 
 void ABP_Grid::SetUsed(int32 fID, bool used){
 	for (int i = 0; i < GridArray.Max(); ++i){
-		if (GridArray[i].ID == fID)
+		if (GridArray[i].ID == fID) {
 			GridArray[i].Used = used;
+			break;
+		}
 	}
 }

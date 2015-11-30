@@ -37,7 +37,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 rows;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 columns;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 offset;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 offsetX;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 offsetY;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly,  Category = "Position") TArray<FGrid> GridArray;
 
 	// Called when the game starts or when spawned
@@ -46,8 +47,9 @@ public:
 	// Called every frame
 	virtual void Tick( float DeltaSeconds ) override;
 
-	UFUNCTION(BlueprintCallable, Category = "LevelGrid") virtual void CreateLevelGrid(int32 fOffset, int32 fRows, int32 fColumns);
+	UFUNCTION(BlueprintCallable, Category = "LevelGrid") virtual void CreateLevelGrid(int32 fOffsetx, int32 fOffsety, int32 fRows, int32 fColumns);
 	UFUNCTION(BlueprintCallable, Category = "LevelGrid") FVector GetGridPosition(int32 fID);
 	UFUNCTION(BlueprintCallable, Category = "LevelGrid") bool GetUsed(int32 fID);
 	UFUNCTION(BlueprintCallable, Category = "LevelGrid") virtual void SetUsed(int32 fID, bool used);
+
 };
