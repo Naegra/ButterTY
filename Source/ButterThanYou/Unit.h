@@ -39,7 +39,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Unit stats") virtual void CheckPositions(bool access);
 	UFUNCTION(BlueprintCallable, Category = "Unit stats") virtual void ChangePlayer();
-
 	UFUNCTION(BlueprintCallable, Category = "Unit stats") bool LineTrace(bool negative);
 
 	FORCEINLINE class UStaticMeshComponent* GetMeshComponent()

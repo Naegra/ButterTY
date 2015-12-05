@@ -77,18 +77,18 @@ bool AUnit::LineTrace(bool negative) {
 				}
 			}
 		}
-		else if (this->GetActorLocation().Y < 1200 && !negative) {
+		else if (this->GetActorLocation().Y < ((Grid->rows * Grid->offsetY) + Grid->GetActorLocation().Y) && !negative) {
 			Front = false;
 			this->SetActorLocation(FVector(this->GetActorLocation().X, this->GetActorLocation().Y + Grid->offsetY, this->GetActorLocation().Z));
 		}
-		else if (this->GetActorLocation().Y > -1000 && negative) {
+		else if (this->GetActorLocation().Y > (Grid->GetActorLocation().Y + Grid->offsetY) && negative) {
 			this->SetActorLocation(FVector(this->GetActorLocation().X, this->GetActorLocation().Y - Grid->offsetY, this->GetActorLocation().Z));
 			Front = false;
 		}
-		else if (this->GetActorLocation().Y == 1200 && !negative) {
+		else if (this->GetActorLocation().Y == ((Grid->rows * Grid->offsetY) + this->GetActorLocation().Y) && !negative) {
 			AttackPlayer = true;
 		}
-		else if (this->GetActorLocation().Y == -1000 && negative) {
+		else if (this->GetActorLocation().Y == (Grid->GetActorLocation().Y + Grid->offsetY) && negative) {
 			AttackPlayer = true;
 		}
 	return RV_Hit.bBlockingHit;
