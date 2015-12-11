@@ -30,8 +30,6 @@ void AUnit::BeginPlay()
 		AttackDelay = 1 / AttackSpeed;
 	else
 		AttackDelay = 0;
-
-	CheckPositions(false);
 }
 
 // Called every frame
@@ -39,7 +37,17 @@ void AUnit::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	if (Health <= 0) {
-		Destroy();
+		if (ParticleDeath != nullptr && deathParticleComp == nullptr && !deathActive) {
+			deathActive = true;
+			StaticMeshComponent->SetVisibility(false,true);
+			StaticMeshComponent->BodyInstance.SetObjectType(ECC_Vehicle);
+			StaticMeshComponent->BodyInstance.SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			StaticMeshComponent->bGenerateOverlapEvents = false;
+			deathParticleComp = UGameplayStatics::SpawnEmitterAttached(ParticleDeath, this->RootComponent, NAME_None, FVector(0, 0, 0), GetActorRotation(), EAttachLocation::KeepWorldPosition, false);
+		}
+		if ((deathActive && !deathParticleComp->IsActive()) || deathParticleComp == nullptr) {
+			Destroy();
+		}
 	}
 }
 
