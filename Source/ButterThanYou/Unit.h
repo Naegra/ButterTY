@@ -12,8 +12,8 @@ UCLASS()
 class BUTTERTHANYOU_API AUnit : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AUnit();
 	//Can be changed by GD
@@ -29,20 +29,27 @@ public:
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") bool Player = false;
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") bool TempPlayer = false;
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") bool Front = false;
+	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") bool Fire = false;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DO NOT CHANGE") bool AttackPlayer = false;
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") int32 PosID = 0;
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") ABP_Grid* Grid;
 
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") UParticleSystemComponent* deathParticleComp = nullptr;
 	bool deathActive = false;
+	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") AMyCharacter* TargetEnemy;
+
+	
 
 	class UMaterialInstanceDynamic* tempMat;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void GetEnemy();
+	virtual void SetFire();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Unit")
 	class UStaticMeshComponent *StaticMeshComponent;
@@ -50,6 +57,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Unit function") virtual void CheckPositions(bool access);
 	UFUNCTION(BlueprintCallable, Category = "Unit function") virtual void ChangePlayer();
 	UFUNCTION(BlueprintCallable, Category = "Unit function") bool LineTrace(bool negative);
+
+	FTimerHandle Delay;
 
 	FORCEINLINE class UStaticMeshComponent* GetMeshComponent()
 	{

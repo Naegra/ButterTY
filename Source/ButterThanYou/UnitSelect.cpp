@@ -7,7 +7,7 @@
 // Sets default values
 AUnitSelect::AUnitSelect()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -16,13 +16,13 @@ AUnitSelect::AUnitSelect()
 void AUnitSelect::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
-void AUnitSelect::Tick( float DeltaTime )
+void AUnitSelect::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
 }
 

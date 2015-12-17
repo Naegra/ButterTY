@@ -6,7 +6,7 @@
 // Sets default values
 AUnit::AUnit()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("UnitMesh"));
 	RootComponent = StaticMeshComponent;
@@ -16,16 +16,23 @@ AUnit::AUnit()
 void AUnit::BeginPlay()
 {
 	Super::BeginPlay();
+	GetWorld()->GetTimerManager().SetTimer(Delay, this, &AUnit::GetEnemy, 0.01f, false);
+
+	TempPlayer = Player;
+	CheckPositions(false);
+	/*	CURRENTLY NOT USED
+
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
-		ACharacter* tempChar = Cast<ACharacter>(*ActorItr);
-		if (tempChar != nullptr && (*ActorItr)->ActorHasTag(FName("second"))) {
-			SetOwner(tempChar);
-		}
-		else if (tempChar != nullptr && !(*ActorItr)->ActorHasTag(FName("second"))) {
-			SetOwner(tempChar);
-		}
-	}
+	//{
+	//	ACharacter* tempChar = Cast<ACharacter>(*ActorItr);
+	//	if (tempChar != nullptr && (*ActorItr)->ActorHasTag(FName("second"))) {
+	//		SetOwner(tempChar);
+	//	}
+	//	else if (tempChar != nullptr && !(*ActorItr)->ActorHasTag(FName("second"))) {
+	//		SetOwner(tempChar);
+	//	}
+	}*/
+
 	if (AttackSpeed > 0)
 		AttackDelay = 1 / AttackSpeed;
 	else
@@ -33,13 +40,36 @@ void AUnit::BeginPlay()
 }
 
 // Called every frame
-void AUnit::Tick( float DeltaTime )
+void AUnit::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
+
+	if (Health > 0) {
+		if (TempPlayer == Player) {
+			if (AttackDelay > 0) {
+				GetWorld()->GetTimerManager().SetTimer(Delay, this, &AUnit::SetFire, AttackDelay, true);
+				if (AttackPlayer) {
+					if (TargetEnemy->iHealth > 0) {
+						TargetEnemy->iHealth -= Damage;
+					}
+				}
+				else if (Front) {
+					Fire = true;
+					//SPAWN PROJECTILE HERE
+				}
+			}
+		}
+		else {
+			TempPlayer = Player;
+	
+		}
+		GetWorld()->GetTimerManager().ClearTimer(Delay);
+	}
+
 	if (Health <= 0) {
 		if (ParticleDeath != nullptr && deathParticleComp == nullptr && !deathActive) {
 			deathActive = true;
-			StaticMeshComponent->SetVisibility(false,true);
+			StaticMeshComponent->SetVisibility(false, true);
 			StaticMeshComponent->BodyInstance.SetObjectType(ECC_Vehicle);
 			StaticMeshComponent->BodyInstance.SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			StaticMeshComponent->bGenerateOverlapEvents = false;
@@ -48,6 +78,31 @@ void AUnit::Tick( float DeltaTime )
 		if ((deathActive && !deathParticleComp->IsActive()) || deathParticleComp == nullptr) {
 			Destroy();
 		}
+	}
+}
+
+void AUnit::SetFire() {
+	if (AttackPlayer) {
+		if (TargetEnemy->iHealth > 0) {
+			TargetEnemy->iHealth -= Damage;
+		}
+	}
+	else if (Front) {
+		Fire = true;
+		//SPAWN PROJECTILE HERE
+	}
+}
+
+void AUnit::GetEnemy() {
+	TArray<AActor*> CharacterArray;
+	UGameplayStatics::GetAllActorsOfClass(this->GetWorld(), AMyCharacter::StaticClass(), CharacterArray);
+	if (CharacterArray.Num() > 0) {
+		for (AActor* Character : CharacterArray) {
+			if (Cast<AMyCharacter>(Character)->isFirstPlayer != Player)
+				TargetEnemy = Cast<AMyCharacter>(Character);
+			UE_LOG(LogTemp, Log, TEXT("Number of ACharacter in the TArray: %s"), *FString::FromInt(CharacterArray.Num()));
+		}
+		GetWorld()->GetTimerManager().ClearTimer(Delay);
 	}
 }
 
@@ -61,7 +116,7 @@ bool AUnit::LineTrace(bool negative) {
 
 	bool temp = true;
 
-	FCollisionQueryParams RV_TraceParams (FName(TEXT("RV_Trace")), true, ActorsToIgnore[0]);
+	FCollisionQueryParams RV_TraceParams(FName(TEXT("RV_Trace")), true, ActorsToIgnore[0]);
 	RV_TraceParams.bTraceComplex = true;
 	RV_TraceParams.bTraceAsyncScene = true;
 	RV_TraceParams.bReturnPhysicalMaterial = false;
@@ -99,7 +154,7 @@ bool AUnit::LineTrace(bool negative) {
 		else if (this->GetActorLocation().Y == (Grid->GetActorLocation().Y + Grid->offsetY) && negative) {
 			AttackPlayer = true;
 		}
-	return RV_Hit.bBlockingHit;
+		return RV_Hit.bBlockingHit;
 	}
 	return false;
 }
