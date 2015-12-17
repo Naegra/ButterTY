@@ -44,27 +44,27 @@ void AUnit::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Health > 0) {
-		if (TempPlayer == Player) {
-			if (AttackDelay > 0) {
-				GetWorld()->GetTimerManager().SetTimer(Delay, this, &AUnit::SetFire, AttackDelay, true);
-				if (AttackPlayer) {
-					if (TargetEnemy->iHealth > 0) {
-						TargetEnemy->iHealth -= Damage;
-					}
-				}
-				else if (Front) {
-					Fire = true;
-					//SPAWN PROJECTILE HERE
-				}
-			}
-		}
-		else {
-			TempPlayer = Player;
-	
-		}
-		GetWorld()->GetTimerManager().ClearTimer(Delay);
-	}
+//	if (Health > 0) {
+//		if (TempPlayer == Player) {
+//			if (AttackDelay > 0) {
+//				GetWorld()->GetTimerManager().SetTimer(Delay, this, &AUnit::SetFire, AttackDelay, true);
+//				if (AttackPlayer) {
+//					if (TargetEnemy->iHealth > 0) {
+//						TargetEnemy->iHealth -= Damage;
+//					}
+//				}
+//				else if (Front) {
+//					Fire = true;
+//					//SPAWN PROJECTILE HERE
+//				}
+//			}
+//		}
+//		else {
+//			TempPlayer = Player;
+//	
+//		}
+//		GetWorld()->GetTimerManager().ClearTimer(Delay);
+//	}
 
 	if (Health <= 0) {
 		if (ParticleDeath != nullptr && deathParticleComp == nullptr && !deathActive) {
