@@ -7,7 +7,7 @@
 // Sets default values
 ABP_Grid::ABP_Grid()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -20,16 +20,16 @@ void ABP_Grid::BeginPlay()
 }
 
 // Called every frame
-void ABP_Grid::Tick( float DeltaTime )
+void ABP_Grid::Tick(float DeltaTime)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaTime);
 
 }
 
 void ABP_Grid::CreateLevelGrid(int32 offsetX, int32 offsetY, int32 rows, int32 columns) {
 
-	for (int i = 1; i < rows + 1; ++i){
-		for (int j = 1; j < columns + 1; ++j){
+	for (int i = 1; i < rows + 1; ++i) {
+		for (int j = 1; j < columns + 1; ++j) {
 			FVector tempVector = GetActorLocation();
 			FGrid tempGrid;
 			tempGrid.ID = i * 10 + j;
@@ -40,24 +40,24 @@ void ABP_Grid::CreateLevelGrid(int32 offsetX, int32 offsetY, int32 rows, int32 c
 	}
 }
 
-FVector ABP_Grid::GetGridPosition(int32 fID){
-	for (int i = 0; i < GridArray.Max(); ++i){
+FVector ABP_Grid::GetGridPosition(int32 fID) {
+	for (int i = 0; i < GridArray.Max(); ++i) {
 		if (GridArray[i].ID == fID)
 			return GridArray[i].Position;
 	}
-	return FVector(0,0,0);
+	return FVector(0, 0, 0);
 }
 
-bool ABP_Grid::GetUsed(int32 fID){
-	for (int i = 0; i < GridArray.Max(); ++i){
+bool ABP_Grid::GetUsed(int32 fID) {
+	for (int i = 0; i < GridArray.Max(); ++i) {
 		if (GridArray[i].ID == fID)
 			return GridArray[i].Used;
 	}
 	return 0;
 }
 
-void ABP_Grid::SetUsed(int32 fID, bool used){
-	for (int i = 0; i < GridArray.Max(); ++i){
+void ABP_Grid::SetUsed(int32 fID, bool used) {
+	for (int i = 0; i < GridArray.Max(); ++i) {
 		if (GridArray[i].ID == fID) {
 			GridArray[i].Used = used;
 			break;

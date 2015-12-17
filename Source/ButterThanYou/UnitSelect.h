@@ -6,7 +6,7 @@
 #include "UnitSelect.generated.h"
 
 USTRUCT()
-struct FUnitSelec{
+struct FUnitSelec {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UnitSelectStruct") int32 ID;
@@ -27,8 +27,8 @@ UCLASS()
 class BUTTERTHANYOU_API AUnitSelect : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AUnitSelect();
 
@@ -37,10 +37,10 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
+
 	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Unit Selection") virtual void SelectUnit(int32 fID);
-	
+
 };
