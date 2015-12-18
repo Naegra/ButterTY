@@ -38,8 +38,6 @@ public:
 	bool deathActive = false;
 	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") AMyCharacter* TargetEnemy;
 
-	
-
 	class UMaterialInstanceDynamic* tempMat;
 
 	// Called when the game starts or when spawned

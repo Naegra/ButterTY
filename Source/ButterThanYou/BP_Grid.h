@@ -40,6 +40,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 offsetX;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variables") int32 offsetY;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Position") TArray<FGrid> GridArray;
+//	UPROPERTY(EditAnywhere, BLueprintReadWrite, Category = "DO NOT CHANGE") TArray <AUnit*> UnitArray;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

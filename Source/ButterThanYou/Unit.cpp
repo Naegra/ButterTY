@@ -76,6 +76,7 @@ void AUnit::Tick(float DeltaTime)
 			deathParticleComp = UGameplayStatics::SpawnEmitterAttached(ParticleDeath, this->RootComponent, NAME_None, FVector(0, 0, 0), GetActorRotation(), EAttachLocation::KeepWorldPosition, false);
 		}
 		if ((deathActive && !deathParticleComp->IsActive()) || deathParticleComp == nullptr) {
+//			Grid->UnitArray.Remove(this);
 			Destroy();
 		}
 	}
