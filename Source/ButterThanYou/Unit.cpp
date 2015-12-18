@@ -155,6 +155,12 @@ bool AUnit::LineTrace(bool negative) {
 		else if (this->GetActorLocation().Y == (Grid->GetActorLocation().Y + Grid->offsetY) && negative) {
 			AttackPlayer = true;
 		}
+		else if (this->GetActorLocation().Y == 3000 && !negative) {
+			AttackPlayer = true;
+		}
+		else if (this->GetActorLocation().Y == -850 && negative) {
+			AttackPlayer = true;
+		}
 		return RV_Hit.bBlockingHit;
 	}
 	return false;
